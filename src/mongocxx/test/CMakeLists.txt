@@ -107,12 +107,19 @@ add_executable(test_command_monitoring_specs
     spec/command_monitoring.cpp
 )
 
+add_executable(test_transactions_specs
+    ${CMAKE_SOURCE_DIR}/src/mongocxx/test_util/client_helpers.cpp
+    ${THIRD_PARTY_SOURCE_DIR}/catch/main.cpp
+    spec/transactions.cpp
+)
+
 target_link_libraries(test_driver mongocxx_mocked ${libmongoc_libraries})
 target_link_libraries(test_logging mongocxx_mocked ${libmongoc_libraries})
 target_link_libraries(test_instance mongocxx_mocked ${libmongoc_libraries})
 target_link_libraries(test_crud_specs mongocxx_mocked ${libmongoc_libraries})
 target_link_libraries(test_gridfs_specs mongocxx_mocked ${libmongoc_libraries})
 target_link_libraries(test_command_monitoring_specs mongocxx_mocked ${libmongoc_libraries})
+target_link_libraries(test_transactions_specs mongocxx_mocked ${libmongoc_libraries})
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(test_driver PRIVATE /bigobj)
@@ -124,6 +131,7 @@ target_include_directories(test_instance PRIVATE ${libmongoc_include_directories
 target_include_directories(test_crud_specs PRIVATE ${libmongoc_include_directories})
 target_include_directories(test_gridfs_specs PRIVATE ${libmongoc_include_directories})
 target_include_directories(test_command_monitoring_specs PRIVATE ${libmongoc_include_directories})
+target_include_directories(test_transactions_specs PRIVATE ${libmongoc_include_directories})
 
 target_compile_definitions(test_driver PRIVATE ${libmongoc_definitions})
 target_compile_definitions(test_logging PRIVATE ${libmongoc_definitions})
@@ -135,6 +143,7 @@ add_test(instance test_instance)
 add_test(crud_specs test_crud_specs)
 add_test(gridfs_specs test_gridfs_specs)
 add_test(command_monitoring_specs test_command_monitoring_specs)
+add_test(transactions_specs test_transactions_specs)
 
 set_tests_properties(crud_specs PROPERTIES
     ENVIRONMENT "CRUD_TESTS_PATH=${CMAKE_SOURCE_DIR}/data/crud")
@@ -144,6 +153,8 @@ set_tests_properties(gridfs_specs PROPERTIES
 
 set_tests_properties(command_monitoring_specs PROPERTIES
         ENVIRONMENT "COMMAND_MONITORING_TESTS_PATH=${CMAKE_SOURCE_DIR}/data/command-monitoring")
+set_tests_properties(transactions_specs PROPERTIES
+    ENVIRONMENT "TRANSACTIONS_TESTS_PATH=${CMAKE_SOURCE_DIR}/data/transactions")
 
 if (MONGOCXX_ENABLE_SLOW_TESTS)
   set_tests_properties(driver PROPERTIES
