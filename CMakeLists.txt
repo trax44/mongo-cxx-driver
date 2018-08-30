@@ -11,6 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
+include(HunterGate)
+HunterGate(
+  URL "https://gitlab.com/traxncc/hunter/-/archive/mongo-driver/hunter-mongo-driver.tar.bz2"
+  SHA1 "dea34fcb21db7aeb73067d341b422721f2edd5c7"
+  )
 
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
